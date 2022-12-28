@@ -130,14 +130,14 @@ public class Passagem {
 
     @Override
     public String toString() {
-        return "\nData da emissão: " + dataEmissao +
-                "\nNOME: " + nomePassageiro +
-                "\nCPF: " + cpf +
-                "\nTELEFONE: " + telefone +
-                "\nOrigem: " + origem +
+        return "\nData da emissão: ................ " + dataEmissao +
+                "\nNOME: ........................... " +nomePassageiro+
+                "\nCPF: ............................ "+ cpf +
+                "\nTELEFONE: ....................... " + telefone +
+                "\nOrigem: ......................... " + origem +
                 " | Destino: " + destino +
-                "\nData da Viagem: " + dataViagem +
-                "\nPOLTRONA: " + poltrona +
-                "\nVALOR: " + valor;
+                "\nData da Viagem: ................. " + dataViagem +
+                "\nPOLTRONA: ....................... " + poltrona +
+                "\nVALOR: .......................... " + valor;
     }
 }
