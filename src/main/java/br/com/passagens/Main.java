@@ -4,6 +4,9 @@ import br.com.passagens.ValidaCPF.ValidaCPF;
 import br.com.passagens.dao.PassagemDao;
 import br.com.passagens.entity.Passagem;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -51,7 +54,7 @@ public class Main {
                 System.out.println("3 - Brasília          (376.42)");
                 System.out.println("4 - Goiás             (640.00)");
                 System.out.println("5 - Bahia             (489.00)");
-                System.out.println("R: ");
+                System.out.print("R: ");
                 int op2 = input.nextInt();
                 input.nextLine();
 
@@ -104,6 +107,27 @@ public class Main {
 
 
                 passagemDao.createPassagem(passagem);
+
+                FileWriter arq = null;
+                try {
+                    String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
+                    arq = new FileWriter(nomeArq);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                PrintWriter gravarArq = new PrintWriter(arq);
+
+                gravarArq.printf("REGISTRO DE PASSAGEM\n");
+            /*for (i=1; i<=10; i++) {
+                gravarArq.printf("| %2d X %d = %2d |%n", i, n, (i*n));
+            }*/
+                gravarArq.printf(String.valueOf(passagem));
+
+                try {
+                    arq.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 System.out.println("Passagem criada");
 

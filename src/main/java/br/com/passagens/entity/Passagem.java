@@ -138,6 +138,6 @@ public class Passagem {
                 " | Destino: " + destino +
                 "\nData da Viagem: " + dataViagem +
                 "\nPOLTRONA: " + poltrona +
-                "VALOR: " + valor;
+                "\nVALOR: " + valor;
     }
 }
