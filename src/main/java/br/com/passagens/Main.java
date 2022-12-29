@@ -18,15 +18,27 @@ public class Main {
         PassagemDao passagemDao = new PassagemDao();
 
         String cpf;
+        int op2 = 0, op = 0;
 
-        System.out.println("========= MENU =========");
-        System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] SAIR");
-        System.out.print("R: ");
-        int op = input.nextInt();
-        input.nextLine();
+        while (true){
+            System.out.println("========= MENU =========");
+            System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] SAIR");
+            System.out.print("R: ");
+            op = input.nextInt();
+            input.nextLine();
+
+            if(op>5||op<1){
+                System.out.println("Opção inválida");
+                continue;
+            }else{
+                break;
+            }
+        }
+
 
         switch(op) {
             case 1:
+                System.out.println("===== CADASTRO =====");
                 Passagem passagem = new Passagem();
 
                 System.out.print("Nome: ");
@@ -55,8 +67,18 @@ public class Main {
                 System.out.println("4 - Goiás             (640.00)");
                 System.out.println("5 - Bahia             (489.00)");
                 System.out.print("R: ");
-                int op2 = input.nextInt();
-                input.nextLine();
+                while (true){
+                    op2 = input.nextInt();
+                    input.nextLine();
+
+                    if(op2>5||op2<1){
+                        System.out.println("Opção inválida!");
+                        continue;
+                    }else{
+                        break;
+                    }
+                }
+
 
                 switch (op2){
                     case 1:
@@ -118,9 +140,7 @@ public class Main {
                 PrintWriter gravarArq = new PrintWriter(arq);
 
                 gravarArq.printf("REGISTRO DE PASSAGEM\n");
-            /*for (i=1; i<=10; i++) {
-                gravarArq.printf("| %2d X %d = %2d |%n", i, n, (i*n));
-            }*/
+
                 gravarArq.printf(String.valueOf(passagem));
 
                 try {
@@ -156,9 +176,9 @@ public class Main {
 
                 if(confirma.equals("S")){
                     passagemDao.removePassagem(cpfDel);
-                    System.out.println("PAssagem APAGADA!");
+                    System.out.println("Passagem APAGADA!");
                 }else{
-                    System.out.println("PAssagem Mantida!");
+                    System.out.println("Passagem Mantida!");
                 }
 
                 break;
