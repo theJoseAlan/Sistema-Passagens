@@ -7,6 +7,7 @@ import br.com.passagens.entity.Passagem;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -20,19 +21,29 @@ public class Main {
         String cpf;
         int op2 = 0, op = 0;
 
-        while (true){
+        while (true) {
+
+            try {
+
             System.out.println("========= MENU =========");
             System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] SAIR");
             System.out.print("R: ");
+
             op = input.nextInt();
             input.nextLine();
 
-            if(op>5||op<1){
-                System.out.println("Opção inválida");
-                continue;
-            }else{
-                break;
+                if (op > 5 || op < 1) {
+                    System.out.println("Opção inválida");
+                } else {
+                    break;
+                }
+
+            }catch (Exception e){
+                System.out.println("ERRO! Digite apenas números!");
+                input.nextLine();
+
             }
+
         }
 
 
@@ -130,6 +141,7 @@ public class Main {
 
                 passagemDao.createPassagem(passagem);
 
+                //Inicio de salvameneto dos dados em arquivo txt
                 FileWriter arq = null;
                 try {
                     String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
@@ -148,6 +160,7 @@ public class Main {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                //Fim do salvamento em arquivo local
 
                 System.out.println("Passagem criada");
 
