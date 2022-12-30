@@ -20,8 +20,8 @@ public class Main {
         PassagemDao passagemDao = new PassagemDao();
 
         String cpf;
-        int op2 = 0, op = 0;
-        String telefone="";
+        int op2 = 0, op = 0, dia =0, mes = 0, ano=0, poltrona=0;
+        String telefone="", dataViagem = "";
 
         while (true) {
 
@@ -56,6 +56,8 @@ public class Main {
                 System.out.print("Nome: ");
                 String nome = input.nextLine();
 
+                passagem.setNomePassageiro(nome);
+
                 while (true){
 
                     System.out.print("CPF(apenas números): ");
@@ -68,14 +70,10 @@ public class Main {
                     }
                 }
 
-                //Valida numero de telefone
                 while (true){
-
 
                     System.out.print("Telefone: ");
                     telefone = input.nextLine();
-
-                    //validaCPF.validarTelefone(telefone);
 
                     if(validaTelefone.validarTelefone(telefone)){
                         passagem.setTelefone(telefone);
@@ -86,24 +84,28 @@ public class Main {
                 }
 
 
-
-                System.out.println("Escolha seu destino: ");
-                System.out.println("    DESTINO --------- VALOR");
-                System.out.println("1 - São Paulo         (690.00)");
-                System.out.println("2 - Rio de Janeiro    (875.00)");
-                System.out.println("3 - Brasília          (376.42)");
-                System.out.println("4 - Goiás             (640.00)");
-                System.out.println("5 - Bahia             (489.00)");
-                System.out.print("R: ");
                 while (true){
-                    op2 = input.nextInt();
-                    input.nextLine();
+                    try {
+                        System.out.println("Escolha seu destino: ");
+                        System.out.println("    DESTINO --------- VALOR");
+                        System.out.println("1 - São Paulo         (690.00)");
+                        System.out.println("2 - Rio de Janeiro    (875.00)");
+                        System.out.println("3 - Brasília          (376.42)");
+                        System.out.println("4 - Goiás             (640.00)");
+                        System.out.println("5 - Bahia             (489.00)");
+                        System.out.print("R: ");
+                        op2 = input.nextInt();
+                        input.nextLine();
 
-                    if(op2>5||op2<1){
-                        System.out.println("Opção inválida!");
-                        continue;
-                    }else{
-                        break;
+                        if(op2>5||op2<1){
+                            System.out.println("Opção inválida!");
+                            continue;
+                        }else{
+                            break;
+                        }
+                    }catch (Exception e){
+                        System.out.println("Digite apenas números");
+                        input.nextLine();
                     }
                 }
 
@@ -143,18 +145,61 @@ public class Main {
                         break;
                 }
 
-                System.out.print("Qual a data da sua viagem (dd/mm/aaaa)? ");
-                String dataViagem = input.nextLine();
+                //Data da viagem
+                while (true){
 
-                System.out.print("Escolha uma poltrona (1 - 50): ");
-                int poltrona = input.nextInt();
-                input.nextLine();
+                    try {
+                        System.out.println("Data da viagem: ");
+                        System.out.print("DIA: ");
+                        dia = input.nextInt();
+                        input.nextLine();
+                        if(dia<1 || dia >31){
+                            System.out.println("Dia inválido! Tente novamente!");
+                        }else{
+                            System.out.print("MÊS: ");
+                            mes = input.nextInt();
+                            input.nextLine();
 
-                passagem.setNomePassageiro(nome);
+                            if(mes<1 || mes>12){
+                                System.out.println("Mês inválido! Tente novamente!");
+                            }else{
+                                System.out.print("ANO: ");
+                                ano = input.nextInt();
+                                input.nextLine();
 
+                                if(ano<2023 || ano>2024){
+                                    System.out.println("Só temos reserva para 2023 e 2024");
+                                }else{
+                                    break;
+                                }
+                            }
+                        }
+                    }catch (Exception e){
+                        System.out.println("Digite apenas números! Tente novamente!");
+                        input.nextLine();
+                    }
+                    dataViagem = dia+"/"+mes+"/"+ano;
+                }
                 passagem.setDataViagem(dataViagem);
-                passagem.setPoltrona(poltrona);
+                //fim data viagem
 
+                while (true){
+                    try {
+                        System.out.print("Escolha uma poltrona (1 - 50): ");
+                        poltrona = input.nextInt();
+                        input.nextLine();
+
+                        if(poltrona<1 || poltrona>50){
+                            System.out.println("Inválido");
+                        }else{
+                            passagem.setPoltrona(poltrona);
+                            break;
+                        }
+                    }catch (Exception e){
+                        System.out.println("Digite apenas números inteiros");
+                        input.nextLine();
+                    }
+                }
 
                 passagemDao.createPassagem(passagem);
 
