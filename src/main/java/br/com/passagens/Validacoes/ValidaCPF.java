@@ -1,4 +1,4 @@
-package br.com.passagens.ValidaCPF;
+package br.com.passagens.Validacoes;
 
 import java.util.InputMismatchException;
 

@@ -134,7 +134,7 @@ public class Passagem {
                 "\nNOME: ........................... " +nomePassageiro+
                 "\nCPF: ............................ "+ cpf +
                 "\nTELEFONE: ....................... " + telefone +
-                "\nOrigem: ......................... " + origem +
+                "\nVIAGEM .......................... Origem: " + origem +
                 " | Destino: " + destino +
                 "\nData da Viagem: ................. " + dataViagem +
                 "\nPOLTRONA: ....................... " + poltrona +

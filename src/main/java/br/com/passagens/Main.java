@@ -1,25 +1,27 @@
 package br.com.passagens;
 
-import br.com.passagens.ValidaCPF.ValidaCPF;
+import br.com.passagens.Validacoes.ValidaCPF;
+import br.com.passagens.Validacoes.ValidaTelefone;
 import br.com.passagens.dao.PassagemDao;
 import br.com.passagens.entity.Passagem;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
+        ValidaTelefone validaTelefone = new ValidaTelefone();
+
         PassagemDao passagemDao = new PassagemDao();
 
         String cpf;
         int op2 = 0, op = 0;
+        String telefone="";
 
         while (true) {
 
@@ -41,7 +43,6 @@ public class Main {
             }catch (Exception e){
                 System.out.println("ERRO! Digite apenas números!");
                 input.nextLine();
-
             }
 
         }
@@ -67,8 +68,24 @@ public class Main {
                     }
                 }
 
-                System.out.print("Telefone: ");
-                String telefone = input.nextLine();
+                //Valida numero de telefone
+                while (true){
+
+
+                    System.out.print("Telefone: ");
+                    telefone = input.nextLine();
+
+                    //validaCPF.validarTelefone(telefone);
+
+                    if(validaTelefone.validarTelefone(telefone)){
+                        passagem.setTelefone(telefone);
+                        break;
+                    }else{
+                        System.out.println("Algo deu errado! Tente novamente");
+                    }
+                }
+
+
 
                 System.out.println("Escolha seu destino: ");
                 System.out.println("    DESTINO --------- VALOR");
@@ -134,7 +151,7 @@ public class Main {
                 input.nextLine();
 
                 passagem.setNomePassageiro(nome);
-                passagem.setTelefone(telefone);
+
                 passagem.setDataViagem(dataViagem);
                 passagem.setPoltrona(poltrona);
 
@@ -144,7 +161,7 @@ public class Main {
                 //Inicio de salvameneto dos dados em arquivo txt
                 FileWriter arq = null;
                 try {
-                    String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
+                    String nomeArq = "C:\\Users\\user\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
                     arq = new FileWriter(nomeArq);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
