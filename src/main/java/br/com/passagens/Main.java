@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,8 +22,15 @@ public class Main {
 
         PassagemDao passagemDao = new PassagemDao();
 
-        String cpf;
-        int op2 = 0, op = 0;
+        ArrayList<String> poltronasDisponiveis = new ArrayList();
+        int cont =0;
+
+        for(int i = 1; i<=50; i++){
+            poltronasDisponiveis.add(" "+i);
+        }
+
+
+        int  op = 0;
 
         while (true) {
 
@@ -46,7 +54,7 @@ public class Main {
 
             if(op==1) {
 
-                criaPassagem(input, validacoes, passagemDao);
+                criaPassagem(input, validacoes, passagemDao, cont, poltronasDisponiveis);
 
             } else if (op==2) {
 
@@ -131,7 +139,8 @@ public class Main {
     }
 
     private static void criaPassagem(Scanner input, Validacoes validacoes,
-                                     PassagemDao passagemDao) {
+                                     PassagemDao passagemDao, int cont,
+                                     ArrayList<String> poltronasDisponiveis) {
         int poltrona;
         String telefone;
         int op2;
@@ -143,7 +152,7 @@ public class Main {
             System.out.print("Nome: ");
             String nome = input.nextLine();
 
-            if(validacoes.validaNome(nome)==true){
+            if(validacoes.validaNome(nome)){
                 passagem.setNomePassageiro(nome);
                 break;
             }else{
@@ -157,11 +166,11 @@ public class Main {
             cpf = input.nextLine();
 
 
-            if (validacoes.isCPF(cpf)==true){
+            if (validacoes.isCPF(cpf)){
                 passagem.setCpf(cpf);
                 break;
             } else {
-                System.out.printf("Erro, CPF invalido !!!\n");
+                System.out.print("Erro, CPF invalido !!!\n");
             }
         }
 
@@ -194,7 +203,6 @@ public class Main {
 
                 if(op2>5||op2<1){
                     System.out.println("Opção inválida!");
-                    continue;
                 }else{
                     break;
                 }
@@ -241,11 +249,11 @@ public class Main {
 
         //Data da viagem
         while (true) {
-            
+
             System.out.print("Data da viagem (dd/mm/aaaa): ");
             String dataViagem = input.nextLine();
 
-            if (validacoes.validaData(dataViagem) == true) {
+            if (validacoes.validaData(dataViagem)) {
                 passagem.setDataViagem(dataViagem);
                 break;
             } else {
@@ -257,6 +265,16 @@ public class Main {
 
         while (true){
             try {
+
+                System.out.println("Poltronas disponíveis: ");
+                for(String poltras : poltronasDisponiveis){
+                    System.out.print(poltras+" | ");
+                    cont ++;
+                    if(cont==26){
+                        System.out.println();
+                    }
+                }
+
                 System.out.print("Escolha uma poltrona (1 - 50): ");
                 poltrona = input.nextInt();
                 input.nextLine();
@@ -264,6 +282,7 @@ public class Main {
                 if(poltrona<1 || poltrona>50){
                     System.out.println("Inválido");
                 }else{
+                    poltronasDisponiveis.set(poltrona-1, "X");
                     passagem.setPoltrona(poltrona);
                     break;
                 }
@@ -276,7 +295,7 @@ public class Main {
         passagemDao.createPassagem(passagem);
 
         //Inicio de salvameneto dos dados em arquivo txt
-        FileWriter arq = null;
+        FileWriter arq;
         try {
             String nomeArq = "C:\\Users\\user\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
             arq = new FileWriter(nomeArq);
@@ -297,7 +316,5 @@ public class Main {
         //Fim do salvamento em arquivo local
 
         System.out.println("Passagem criada");
-
-        return;
     }
 }
