@@ -275,6 +275,7 @@ public class Main {
                     }
                 }
 
+                System.out.println();
                 System.out.print("Escolha uma poltrona (1 - 50): ");
                 poltrona = input.nextInt();
                 input.nextLine();
