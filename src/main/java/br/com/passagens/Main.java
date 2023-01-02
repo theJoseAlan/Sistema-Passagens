@@ -58,43 +58,49 @@ public class Main {
 
             } else if (op==4) {
 
-                System.out.print("Digite o CPF do passageiro (apenas números): ");
-                String cpfDel = input.nextLine();
-
-                if(passagemDao.consultaPassagem(cpfDel)==null){
-                    System.out.println("Não há nenhuma passagem cadastrada com o cpf: "+cpfDel);
-                }else{
-                    System.out.println("Tem certeza que deseja remover a passagem de " +
-                            passagemDao.consultaPassagem(cpfDel).getNomePassageiro() + "?");
-                    System.out.print("R(S/N): ");
-                    String confirma = input.nextLine();
-
-                    if (confirma.equals("S") || confirma.equals("s")) {
-
-                        //Procurando o arquivo
-                        Path pathOfFile1 = Paths.get("C:\\Users\\user\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
-
-                        //Tentando deletar o arquivo
-                        try {
-                            Files.delete(pathOfFile1);
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        passagemDao.removePassagem(cpfDel);
-                        System.out.println("Passagem APAGADA!");
-                    } else {
-                        System.out.println("Passagem Mantida!");
-                    }
-                }
-
+                deletaPassagem(input, passagemDao);
 
             } else if (op==5) {
                 break;
             }
         }
 
+    }
+
+
+    //Métodos (extraídos)
+
+    private static void deletaPassagem(Scanner input, PassagemDao passagemDao) {
+        System.out.print("Digite o CPF do passageiro (apenas números): ");
+        String cpfDel = input.nextLine();
+
+        if(passagemDao.consultaPassagem(cpfDel)==null){
+            System.out.println("Não há nenhuma passagem cadastrada com o cpf: "+cpfDel);
+        }else{
+            System.out.println("Tem certeza que deseja remover a passagem de " +
+                    passagemDao.consultaPassagem(cpfDel).getNomePassageiro() + "?");
+            System.out.print("R(S/N): ");
+            String confirma = input.nextLine();
+
+            if (confirma.equals("S") || confirma.equals("s")) {
+
+                //Procurando o arquivo
+                Path pathOfFile1 = Paths.get("C:\\Users\\user\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
+
+                //Tentando deletar o arquivo
+                try {
+                    Files.delete(pathOfFile1);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                passagemDao.removePassagem(cpfDel);
+                System.out.println("Passagem APAGADA!");
+            } else {
+                System.out.println("Passagem Mantida!");
+            }
+        }
     }
 
     private static void buscaPassagem(Scanner input, PassagemDao passagemDao) {
@@ -198,7 +204,6 @@ public class Main {
             }
         }
 
-
         switch (op2){
             case 1:
                 passagem.setOrigem("Piaui");
@@ -236,8 +241,7 @@ public class Main {
 
         //Data da viagem
         while (true) {
-
-
+            
             System.out.print("Data da viagem (dd/mm/aaaa): ");
             String dataViagem = input.nextLine();
 
