@@ -38,6 +38,13 @@ public class PassagemDao {
         return this.manager.find(Passagem.class, cpf);
     }
 
+    public List poltronasnoDB(){
+
+    Query query = manager.createQuery("SELECT poltrona FROM Passagem ");
+
+    return query.getResultList();
+    }
+
     //Delete
     public boolean removePassagem(String cpf){
         Passagem passagem = this.manager.find(Passagem.class, cpf);

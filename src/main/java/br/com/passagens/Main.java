@@ -4,6 +4,7 @@ import br.com.passagens.Validacoes.Validacoes;
 import br.com.passagens.dao.PassagemDao;
 import br.com.passagens.entity.Passagem;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,18 +28,52 @@ public class Main {
         ArrayList<String> poltronasDisponiveis = new ArrayList();
 
         int cont =0;
+        int  op = 0;
 
+        //Adicionando as poltronas na lista. Mas o interessante é fazer pegar pelo BD
+        //Mas como isso é apenas uma ideia, implementarei isso depois
         for(int i = 1; i<=50; i++){
             poltronasDisponiveis.add(" "+i);
         }
+        /*for(int i = 1; i<=50; i++){
+            poltronasDisponiveis.add();
+        }*/
+
+        //Já que no persistence.xml está como create, essa função apaga todos os aquivos criados durante uma execução
+        //Caso queira que os dados sejam sempre mantidos, o persistence deve ser alterado de create para update
+        // e deletar o código abaixo
+        //inicio delete all archives
+        File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
+        if (folder.isDirectory()) {
+            File[] sun = folder.listFiles();
+            for (File toDelete : sun) {
+                toDelete.delete();
+            }
+        }
+        //fim delete all archives
+
+        //Oculta os warnings do hibernate
+        Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 
 
-        int  op = 0;
 
         while (true) {
-
+            System.out.print("Poltronas no BD: ");
+            passagemDao.poltronasnoDB();
+            //
+            List<Integer> poltronasnoBd = passagemDao.poltronasnoDB();
+            for (int poltras : poltronasnoBd){
+                System.out.println(poltras);
+            }
+            //
             try {
+                System.out.println();
+                System.out.println("   _____________\n" +
+                        " _/_|[][][][][] | - -\n" +
+                        "(      Devs Bus | - -\n" +
+                        "=--OO-------OO--=dwb");
 
+                System.out.println("\nReserve aqui sua passagem para 2023! \n");
                 System.out.println("========= MENU =========");
                 System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] SAIR");
                 System.out.print("R: ");
@@ -251,16 +288,32 @@ public class Main {
         //Data da viagem
         while (true) {
 
-            System.out.print("Data da viagem (dd/mm/aaaa): ");
-            String dataViagem = input.nextLine();
+            try {
 
-            if (validacoes.validaData(dataViagem)) {
-                passagem.setDataViagem(dataViagem);
-                break;
-            } else {
-                System.out.println("Data inválida! Tente novamente!");
+
+                System.out.println("Data da viagem");
+                //String dataViagem = input.nextLine();
+
+                System.out.print("Dia (apenas números): ");
+                int dia = input.nextInt();
+                input.nextLine();
+                System.out.print("Mês (apenas números): ");
+                int mes = input.nextInt();
+                input.nextLine();
+
+                if (validacoes.validaData(dia, mes)) {
+                    String dataViagem = dia+"/"+mes+"/2023";
+                    passagem.setDataViagem(dataViagem);
+                    break;
+                } else {
+                    System.out.println("Data inválida! Tente novamente!");
+                }
+            }catch (Exception e){
+                System.out.println("Algo deu errado. Tente novamente!");
+                input.nextLine();
             }
         }
+
 
         //fim data viagem
 
