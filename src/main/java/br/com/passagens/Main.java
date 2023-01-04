@@ -23,6 +23,7 @@ public class Main {
         PassagemDao passagemDao = new PassagemDao();
 
         ArrayList<String> poltronasDisponiveis = new ArrayList();
+
         int cont =0;
 
         for(int i = 1; i<=50; i++){
@@ -264,8 +265,8 @@ public class Main {
         //fim data viagem
 
         while (true){
+            cont = 0;
             try {
-
                 System.out.println("Poltronas disponíveis: ");
                 for(String poltras : poltronasDisponiveis){
                     System.out.print(poltras+" | ");
@@ -281,12 +282,21 @@ public class Main {
                 input.nextLine();
 
                 if(poltrona<1 || poltrona>50){
+
                     System.out.println("Inválido");
+
+                }else if (!poltronasDisponiveis.contains(" "+poltrona)){
+
+                    System.out.println("Essa poltrona já está reservada");
+
                 }else{
+
                     poltronasDisponiveis.set(poltrona-1, "X");
                     passagem.setPoltrona(poltrona);
                     break;
+
                 }
+
             }catch (Exception e){
                 System.out.println("Digite apenas números inteiros");
                 input.nextLine();
@@ -295,7 +305,7 @@ public class Main {
 
         passagemDao.createPassagem(passagem);
 
-        //Inicio de salvameneto dos dados em arquivo txt
+        //Inicio de salvamento dos dados em arquivo txt
         FileWriter arq;
         try {
             String nomeArq = "C:\\Users\\user\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
