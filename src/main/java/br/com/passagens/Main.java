@@ -30,14 +30,18 @@ public class Main {
         int cont =0;
         int  op = 0;
 
-        //Adicionando as poltronas na lista. Mas o interessante é fazer pegar pelo BD
-        //Mas como isso é apenas uma ideia, implementarei isso depois
+        //Adicionando as poltronas na lista
+
         for(int i = 1; i<=50; i++){
             poltronasDisponiveis.add(" "+i);
         }
-        /*for(int i = 1; i<=50; i++){
-            poltronasDisponiveis.add();
-        }*/
+
+        //Remover o comentário do codigo abaixo, caso mude de create para update
+        //no persistence.xml
+        List<Integer> poltronasnoBd = passagemDao.poltronasnoDB();
+        for (int poltras : poltronasnoBd){
+            poltronasDisponiveis.add("X"+poltras);
+        }
 
         //Já que no persistence.xml está como create, essa função apaga todos os aquivos criados durante uma execução
         //Caso queira que os dados sejam sempre mantidos, o persistence deve ser alterado de create para update
@@ -60,12 +64,7 @@ public class Main {
         while (true) {
             System.out.print("Poltronas no BD: ");
             passagemDao.poltronasnoDB();
-            //
-            List<Integer> poltronasnoBd = passagemDao.poltronasnoDB();
-            for (int poltras : poltronasnoBd){
-                System.out.println(poltras);
-            }
-            //
+
             try {
                 System.out.println();
                 System.out.println("   _____________\n" +
@@ -343,7 +342,6 @@ public class Main {
                     System.out.println("Essa poltrona já está reservada");
 
                 }else{
-
                     poltronasDisponiveis.set(poltrona-1, "X");
                     passagem.setPoltrona(poltrona);
                     break;
