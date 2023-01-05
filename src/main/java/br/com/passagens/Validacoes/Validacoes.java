@@ -116,6 +116,26 @@ public class Validacoes {
             }
         }
 
+        int qtdeCaracteresEspeciais =0;
+        String caracteresEspeciais = "'\"!@#$%¨&*()_-+=§|\\[{ª}]º,<.>;:/?°";
+
+        for (int indiceSenha = 0; indiceSenha < nome.length(); indiceSenha++) { // iteracao com a senha
+            // para o caractere da senha selecionado pelo primeiro for
+            // verifica se o caractere e igual a algum caractere presente na lista de
+            // caracteres especiais
+            for (int indiceLista = 0; indiceLista < caracteresEspeciais.length(); indiceLista++) { // iteracao com os caracteres especiais
+                // se o caractere da senha estiver na lista de caracteres especiais
+                // contabiliza um caractere especial presente na senha
+
+                if (nome.charAt(indiceSenha) == caracteresEspeciais.charAt(indiceLista))
+                    qtdeCaracteresEspeciais++;
+            }
+
+        }
+        if(qtdeCaracteresEspeciais>=1){
+            return false;
+        }
+
         return true;
     }
 

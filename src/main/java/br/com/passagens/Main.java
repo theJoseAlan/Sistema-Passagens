@@ -69,7 +69,7 @@ public class Main {
                 op = input.nextInt();
                 input.nextLine();
 
-                if (op > 5 || op < 1) {
+                if (op > 6 || op < 1) {
                     System.out.println("Opção inválida");
                 }
 
@@ -312,8 +312,6 @@ public class Main {
                 input.nextLine();
             }
         }
-
-
         //fim data viagem
 
         while (true){
