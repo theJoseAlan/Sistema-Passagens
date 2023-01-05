@@ -36,13 +36,6 @@ public class Main {
             poltronasDisponiveis.add(" "+i);
         }
 
-        //Remover o comentário do codigo abaixo, caso mude de create para update
-        //no persistence.xml
-        List<Integer> poltronasnoBd = passagemDao.poltronasnoDB();
-        for (int poltras : poltronasnoBd){
-            poltronasDisponiveis.add("X"+poltras);
-        }
-
         //Já que no persistence.xml está como create, essa função apaga todos os aquivos criados durante uma execução
         //Caso queira que os dados sejam sempre mantidos, o persistence deve ser alterado de create para update
         // e deletar o código abaixo
@@ -59,12 +52,8 @@ public class Main {
         //Oculta os warnings do hibernate
         Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 
-
-
         while (true) {
-            System.out.print("Poltronas no BD: ");
-            passagemDao.poltronasnoDB();
-
+            cont = 0;
             try {
                 System.out.println();
                 System.out.println("   _____________\n" +
@@ -74,7 +63,7 @@ public class Main {
 
                 System.out.println("\nReserve aqui sua passagem para 2023! \n");
                 System.out.println("========= MENU =========");
-                System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] SAIR");
+                System.out.println("[1] CRIAR\n[2] EXIBIR TODAS\n[3] CONSULTAR\n[4] APAGAR\n[5] POLTRONAS DISPONÍVEIS\n[6] SAIR");
                 System.out.print("R: ");
 
                 op = input.nextInt();
@@ -106,6 +95,16 @@ public class Main {
                 deletaPassagem(input, passagemDao);
 
             } else if (op==5) {
+                System.out.println("Poltronas disponíveis: ");
+                for(String poltras : poltronasDisponiveis){
+                    System.out.print(poltras+" | ");
+                    cont ++;
+                    if(cont==26){
+                        System.out.println();
+                    }
+                }
+
+            }else if(op==6){
                 break;
             }
         }
@@ -202,12 +201,14 @@ public class Main {
             System.out.print("CPF(apenas números): ");
             cpf = input.nextLine();
 
-
-            if (validacoes.isCPF(cpf)){
+            if(passagemDao.cpfCadastrado(cpf)){
+                System.out.println("CPF já cadastrado");
+            } else if (!validacoes.isCPF(cpf)){
+                System.out.print("Erro, CPF invalido!!!\n");
+            } else {
                 passagem.setCpf(cpf);
                 break;
-            } else {
-                System.out.print("Erro, CPF invalido !!!\n");
+
             }
         }
 
@@ -291,7 +292,6 @@ public class Main {
 
 
                 System.out.println("Data da viagem");
-                //String dataViagem = input.nextLine();
 
                 System.out.print("Dia (apenas números): ");
                 int dia = input.nextInt();

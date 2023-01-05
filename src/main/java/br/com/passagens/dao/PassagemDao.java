@@ -18,6 +18,7 @@ public class PassagemDao {
 
     //Create
     public boolean createPassagem(Passagem passagem){
+
         this.manager.getTransaction().begin();
         this.manager.persist(passagem);
         this.manager.getTransaction().commit();
@@ -38,11 +39,24 @@ public class PassagemDao {
         return this.manager.find(Passagem.class, cpf);
     }
 
-    public List poltronasnoDB(){
+    //Essa função não está em uso, mas pode ser usada caso queira verificaf quais poltronas
+    //estão reservadas
+    /*public List poltronasnoDB(){
 
-    Query query = manager.createQuery("SELECT poltrona FROM Passagem ");
+    Query query = manager.createQuery("SELECT poltrona FROM Passagem");
 
     return query.getResultList();
+    }*/
+
+    public boolean cpfCadastrado(String cpf){
+        Passagem passagem = this.manager.find(Passagem.class, cpf);
+
+        if (passagem==null){
+            return false;
+        }
+
+        return true;
+
     }
 
     //Delete
