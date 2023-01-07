@@ -40,7 +40,8 @@ public class Main {
         //Caso queira que os dados sejam sempre mantidos, o persistence deve ser alterado de create para update
         // e deletar o código abaixo
         //inicio delete all archives
-        File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
+        //File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
+        File folder = new File("C:\\Users\\Jose Alan\\Desktop\\Passagens");
         if (folder.isDirectory()) {
             File[] sun = folder.listFiles();
             for (File toDelete : sun) {
@@ -129,7 +130,7 @@ public class Main {
             if (confirma.equals("S") || confirma.equals("s")) {
 
                 //Procurando o arquivo
-                Path pathOfFile1 = Paths.get("C:\\Users\\user\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
+                Path pathOfFile1 = Paths.get("C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
 
                 //Tentando deletar o arquivo
                 try {
@@ -357,7 +358,7 @@ public class Main {
         //Inicio de salvamento dos dados em arquivo txt
         FileWriter arq;
         try {
-            String nomeArq = "C:\\Users\\user\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
+            String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
             arq = new FileWriter(nomeArq);
         } catch (IOException e) {
             throw new RuntimeException(e);
