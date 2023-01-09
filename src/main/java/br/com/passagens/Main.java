@@ -41,7 +41,7 @@ public class Main {
         // e deletar o código abaixo
         //inicio delete all archives
         //File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
-        File folder = new File("C:\\Users\\Jose Alan\\Desktop\\Passagens");
+        File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
         if (folder.isDirectory()) {
             File[] sun = folder.listFiles();
             for (File toDelete : sun) {
@@ -93,7 +93,39 @@ public class Main {
 
             } else if (op==4) {
 
-                deletaPassagem(input, passagemDao);
+                System.out.print("Digite o CPF do passageiro (apenas números): ");
+                String cpfDel = input.nextLine();
+
+                if(passagemDao.consultaPassagem(cpfDel)==null){
+                    System.out.println("Não há nenhuma passagem cadastrada com o cpf: "+cpfDel);
+                }else{
+                    System.out.println("Tem certeza que deseja remover a passagem de " +
+                            passagemDao.consultaPassagem(cpfDel).getNomePassageiro() + "?");
+                    System.out.print("R(S/N): ");
+                    String confirma = input.nextLine();
+
+                    if (confirma.equals("S") || confirma.equals("s")) {
+
+                        //Procurando o arquivo
+                        Path pathOfFile1 = Paths.get("C:\\Users\\user\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
+
+                        //Tentando deletar o arquivo
+                        try {
+                            Files.delete(pathOfFile1);
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        poltronasDisponiveis.set(passagemDao.consultaPassagem(cpfDel).getPoltrona()-1,
+                                " "+passagemDao.consultaPassagem(cpfDel).getPoltrona());
+                        passagemDao.removePassagem(cpfDel);
+                        System.out.println("Passagem APAGADA!");
+                    } else {
+                        System.out.println("Passagem Mantida!");
+                    }
+                }
+
+                //deletaPassagem(input, passagemDao);
 
             } else if (op==5) {
                 System.out.println("Poltronas disponíveis: ");
@@ -115,7 +147,7 @@ public class Main {
 
     //Métodos (extraídos)
 
-    private static void deletaPassagem(Scanner input, PassagemDao passagemDao) {
+    /*private static void deletaPassagem(Scanner input, PassagemDao passagemDao) {
         System.out.print("Digite o CPF do passageiro (apenas números): ");
         String cpfDel = input.nextLine();
 
@@ -130,7 +162,7 @@ public class Main {
             if (confirma.equals("S") || confirma.equals("s")) {
 
                 //Procurando o arquivo
-                Path pathOfFile1 = Paths.get("C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
+                Path pathOfFile1 = Paths.get("C:\\Users\\user\\Desktop\\Passagens\\Passagem"+cpfDel+".txt");
 
                 //Tentando deletar o arquivo
                 try {
@@ -146,7 +178,7 @@ public class Main {
                 System.out.println("Passagem Mantida!");
             }
         }
-    }
+    }*/
 
     private static void buscaPassagem(Scanner input, PassagemDao passagemDao) {
         System.out.print("Digite o CPF do passageiro (apenas números): ");
@@ -358,7 +390,7 @@ public class Main {
         //Inicio de salvamento dos dados em arquivo txt
         FileWriter arq;
         try {
-            String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
+            String nomeArq = "C:\\Users\\user\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
             arq = new FileWriter(nomeArq);
         } catch (IOException e) {
             throw new RuntimeException(e);
