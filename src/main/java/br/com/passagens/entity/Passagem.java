@@ -2,9 +2,13 @@ package br.com.passagens.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 public class Passagem {
 
@@ -56,77 +60,6 @@ public class Passagem {
         this.valor = valor;
     }
 
-    public Date getDataEmissao() {
-        return dataEmissao;
-    }
-
-    public void setDataEmissao(Date dataEmissao) {
-        this.dataEmissao = dataEmissao;
-    }
-
-    public String getNomePassageiro() {
-        return nomePassageiro;
-    }
-
-    public void setNomePassageiro(String nomePassageiro) {
-        this.nomePassageiro = nomePassageiro;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getOrigem() {
-        return origem;
-    }
-
-    public void setOrigem(String origem) {
-        this.origem = origem;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public String getDataViagem() {
-        return dataViagem;
-    }
-
-    public void setDataViagem(String dataViagem) {
-        this.dataViagem = dataViagem;
-    }
-
-    public int getPoltrona() {
-        return poltrona;
-    }
-
-    public void setPoltrona(int poltrona) {
-        this.poltrona = poltrona;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
 
     @Override
     public String toString() {
