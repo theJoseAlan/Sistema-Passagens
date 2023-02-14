@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static br.com.passagens.Operations.PassagemMethods.criaPassagem;
+import static br.com.passagens.Operations.PassagemMethods.listaPassagens;
 
 public class Main {
     public static void main(String[] args) {
@@ -43,7 +44,7 @@ public class Main {
         // e deletar o código abaixo
         //inicio delete all archives
         //File folder = new File("C:\\Users\\user\\Desktop\\Passagens");
-        File folder = new File("C:\\Users\\Jose Alan\\Desktop\\Passagens");
+        File folder = new File("C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem");
         if (folder.isDirectory()) {
             File[] sun = folder.listFiles();
             for (File toDelete : sun) {
@@ -52,8 +53,6 @@ public class Main {
         }
         //fim delete all archives
 
-        //Oculta os warnings do hibernate
-        Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 
         while (true) {
             cont = 0;
@@ -158,20 +157,5 @@ public class Main {
         }
 
     }
-
-    private static void listaPassagens(PassagemDao passagemDao) {
-        List<Passagem> passagensNoBd = passagemDao.listaPassagens();
-
-        if(passagensNoBd.isEmpty()){
-            System.out.println("\nNão há nenhuma passagem cadastrada\n");
-        }else{
-            System.out.println("===== TODAS AS PASSAGENS =====");
-            for (Passagem passagensEncontradas : passagensNoBd){
-                System.out.println(passagensEncontradas);
-                System.out.println("-----------------------------------");
-            }
-        }
-    }
-
 
 }

@@ -8,10 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PassagemMethods {
 
+    /***/
     public static void criaPassagem(Scanner input, Validacoes validacoes,
                                      PassagemDao passagemDao, int cont,
                                      ArrayList<String> poltronasDisponiveis) {
@@ -195,7 +197,7 @@ public class PassagemMethods {
         //Inicio de salvamento dos dados em arquivo txt
         FileWriter arq;
         try {
-            String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens"+passagem.getCpf()+".txt";
+            String nomeArq = "C:\\Users\\Jose Alan\\Desktop\\Passagens\\Passagem"+passagem.getCpf()+".txt";
             arq = new FileWriter(nomeArq);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -214,6 +216,20 @@ public class PassagemMethods {
         //Fim do salvamento em arquivo local
 
         System.out.println("Passagem criada");
+    }
+
+    public static void listaPassagens(PassagemDao passagemDao) {
+        List<Passagem> passagensNoBd = passagemDao.listaPassagens();
+
+        if(passagensNoBd.isEmpty()){
+            System.out.println("\nNão há nenhuma passagem cadastrada\n");
+        }else{
+            System.out.println("===== TODAS AS PASSAGENS =====");
+            for (Passagem passagensEncontradas : passagensNoBd){
+                System.out.println(passagensEncontradas);
+                System.out.println("-----------------------------------");
+            }
+        }
     }
 
 }
