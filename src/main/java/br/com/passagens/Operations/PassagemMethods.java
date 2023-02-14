@@ -7,6 +7,9 @@ import br.com.passagens.entity.Passagem;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -228,6 +231,53 @@ public class PassagemMethods {
             for (Passagem passagensEncontradas : passagensNoBd){
                 System.out.println(passagensEncontradas);
                 System.out.println("-----------------------------------");
+            }
+        }
+    }
+
+    public static void buscaPassagem(Scanner input, PassagemDao passagemDao) {
+        System.out.print("Digite o CPF do passageiro (apenas números): ");
+        String cpfFind = input.nextLine();
+        Passagem passagemBd = passagemDao.consultaPassagem(cpfFind);
+
+        if(passagemBd == null){
+            System.out.println("\nNenhum passageiro encontrado com o cpf: "+cpfFind+"\n");
+        }else{
+            System.out.println("Passageiro encontrado: "+"\n"+passagemBd);
+        }
+
+    }
+
+    public static void deletaPassagem(Scanner input, PassagemDao passagemDao, ArrayList<String> poltronasDisponiveis) {
+        System.out.print("Digite o CPF do passageiro (apenas números): ");
+        String cpfDel = input.nextLine();
+
+        if(passagemDao.consultaPassagem(cpfDel)==null){
+            System.out.println("Não há nenhuma passagem cadastrada com o cpf: "+cpfDel);
+        }else{
+            System.out.println("Tem certeza que deseja remover a passagem de " +
+                    passagemDao.consultaPassagem(cpfDel).getNomePassageiro() + "?");
+            System.out.print("R(S/N): ");
+            String confirma = input.nextLine();
+
+            if (confirma.equals("S") || confirma.equals("s")) {
+
+                //Procurando o arquivo
+                Path pathOfFile1 = Paths.get("C:\\Users\\Jose Alan\\Desktop\\Passagens"+cpfDel+".txt");
+
+                //Tentando deletar o arquivo
+                try {
+                    Files.delete(pathOfFile1);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                poltronasDisponiveis.set(passagemDao.consultaPassagem(cpfDel).getPoltrona()-1,
+                        " "+ passagemDao.consultaPassagem(cpfDel).getPoltrona());
+                passagemDao.removePassagem(cpfDel);
+                System.out.println("Passagem APAGADA!");
+            } else {
+                System.out.println("Passagem Mantida!");
             }
         }
     }

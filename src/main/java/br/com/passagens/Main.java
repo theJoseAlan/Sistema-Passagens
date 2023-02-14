@@ -2,23 +2,13 @@ package br.com.passagens;
 
 import br.com.passagens.Validacoes.Validacoes;
 import br.com.passagens.dao.PassagemDao;
-import br.com.passagens.entity.Passagem;
+
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static br.com.passagens.Operations.PassagemMethods.criaPassagem;
-import static br.com.passagens.Operations.PassagemMethods.listaPassagens;
+import static br.com.passagens.Operations.PassagemMethods.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,7 +24,6 @@ public class Main {
         int  op = 0;
 
         //Adicionando as poltronas na lista
-
         for(int i = 1; i<=50; i++){
             poltronasDisponiveis.add(" "+i);
         }
@@ -94,39 +83,7 @@ public class Main {
 
             } else if (op==4) {
 
-                System.out.print("Digite o CPF do passageiro (apenas números): ");
-                String cpfDel = input.nextLine();
-
-                if(passagemDao.consultaPassagem(cpfDel)==null){
-                    System.out.println("Não há nenhuma passagem cadastrada com o cpf: "+cpfDel);
-                }else{
-                    System.out.println("Tem certeza que deseja remover a passagem de " +
-                            passagemDao.consultaPassagem(cpfDel).getNomePassageiro() + "?");
-                    System.out.print("R(S/N): ");
-                    String confirma = input.nextLine();
-
-                    if (confirma.equals("S") || confirma.equals("s")) {
-
-                        //Procurando o arquivo
-                        Path pathOfFile1 = Paths.get("C:\\Users\\Jose Alan\\Desktop\\Passagens"+cpfDel+".txt");
-
-                        //Tentando deletar o arquivo
-                        try {
-                            Files.delete(pathOfFile1);
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        poltronasDisponiveis.set(passagemDao.consultaPassagem(cpfDel).getPoltrona()-1,
-                                " "+passagemDao.consultaPassagem(cpfDel).getPoltrona());
-                        passagemDao.removePassagem(cpfDel);
-                        System.out.println("Passagem APAGADA!");
-                    } else {
-                        System.out.println("Passagem Mantida!");
-                    }
-                }
-
-                //deletaPassagem(input, passagemDao);
+                deletaPassagem(input, passagemDao, poltronasDisponiveis);
 
             } else if (op==5) {
                 System.out.println("Poltronas disponíveis: ");
@@ -141,19 +98,6 @@ public class Main {
             }else if(op==6){
                 break;
             }
-        }
-
-    }
-
-    private static void buscaPassagem(Scanner input, PassagemDao passagemDao) {
-        System.out.print("Digite o CPF do passageiro (apenas números): ");
-        String cpfFind = input.nextLine();
-        Passagem passagemBd = passagemDao.consultaPassagem(cpfFind);
-
-        if(passagemBd == null){
-            System.out.println("\nNenhum passageiro encontrado com o cpf: "+cpfFind+"\n");
-        }else{
-            System.out.println("Passageiro encontrado: "+"\n"+passagemBd);
         }
 
     }
